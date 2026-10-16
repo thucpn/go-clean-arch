@@ -8,8 +8,14 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-    volumes:
-      - ./config.json:/app/config.json
+    environment:
+      SERVER_ADDRESS: ":9090"
+      CONTEXT_TIMEOUT: "30"
+      DATABASE_HOST: mysql
+      DATABASE_PORT: "3306"
+      DATABASE_USER: user
+      DATABASE_PASS: password
+      DATABASE_NAME: article
 
   mysql:
     image: mysql:8.3

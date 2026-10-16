@@ -26,9 +26,8 @@ const (
 )
 
 func init() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	if err := godotenv.Load(); err != nil {
+		log.Println("no .env file loaded; using process environment")
 	}
 }
 
