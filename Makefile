@@ -77,8 +77,8 @@ build-race: ## Builds binary (with -race flag)
 	@ echo "done"
 
 
-go-generate: $(MOCKERY) ## Runs go generte ./...
-	go generate ./...
+go-generate: $(MOCKERY) ## Regenerate mocks (.mockery.yml; requires mockery v3+ for Go 1.22+)
+	@ $(MOCKERY)
 
 
 TESTS_ARGS := --format testname --jsonfile gotestsum.json.out

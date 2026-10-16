@@ -19,7 +19,7 @@ type ResponseError struct {
 
 // ArticleService represent the article's usecases
 //
-//go:generate mockery --name ArticleService
+//go:generate mockery --config ../../.mockery.yml
 type ArticleService interface {
 	Fetch(ctx context.Context, cursor string, num int64) ([]domain.Article, string, error)
 	GetByID(ctx context.Context, id int64) (domain.Article, error)

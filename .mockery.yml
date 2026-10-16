@@ -1,0 +1,15 @@
+generate: true
+template: testify
+formatter: goimports
+dir: '{{.InterfaceDir}}/mocks'
+filename: '{{.InterfaceName}}.go'
+pkgname: mocks
+structname: '{{.InterfaceName}}'
+packages:
+  github.com/bxcodec/go-clean-arch/article:
+    interfaces:
+      ArticleRepository:
+      AuthorRepository:
+  github.com/bxcodec/go-clean-arch/internal/rest:
+    interfaces:
+      ArticleService:
