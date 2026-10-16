@@ -94,6 +94,24 @@ $ make up
 $ curl localhost:9090/articles
 ```
 
+### Code format & git hooks
+
+Team formatting uses the standard **`go fmt`** (via pre-commit hook `go-fmt`).
+
+```bash
+# One-time: install pre-commit (macOS)
+brew install pre-commit
+make pre-commit-install
+
+# Format manually
+make fmt
+
+# Run hooks on all files
+make pre-commit-run
+```
+
+On `git commit`, hooks run `gofmt` on staged `.go` files, `go mod tidy`, and `make lint`. Only **Go** + **pre-commit** are required (no extra format binaries).
+
 ### Tools Used:
 
 In this project, I use some tools listed below. But you can use any similar library that have the same purposes. But, well, different library will have different implementation type. Just be creative and use anything that you really need.

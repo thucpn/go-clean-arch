@@ -52,6 +52,16 @@ lint: $(GOLANGCI) ## Runs golangci-lint with predefined configuration
 	golangci-lint version
 	golangci-lint run -c .golangci.yaml ./...
 
+fmt: ## Format Go code (same as go fmt / pre-commit go-fmt)
+	@ go fmt ./...
+
+pre-commit-install: ## Install pre-commit git hooks (brew install pre-commit first)
+	@command -v pre-commit >/dev/null || { echo "Install pre-commit: brew install pre-commit"; exit 1; }
+	pre-commit install
+
+pre-commit-run: ## Run pre-commit on the whole repository
+	pre-commit run --all-files
+
 # -trimpath - will remove the filepathes from the reports, good to same money on network trafic,
 #             focus on bug reports, and find issues fast.
 # - race    - adds a racedetector, in case of racecondition, you can catch report with sentry.
@@ -111,7 +121,7 @@ image-build:
 # please refer this when introducing the database schema migrations.
 
 # # ~~~ Database Migrations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
+
 
 # MYSQL_DSN := "mysql://$(MYSQL_USER):$(MYSQL_PASSWORD)@tcp($(MYSQL_ADDRESS))/$(MYSQL_DATABASE)"
 
