@@ -2,20 +2,25 @@ name: Go Test
 
 on:
   push:
-    branches: ["main", "chore/upgrade-linter"]
+    branches: ["main", "master", "chore/upgrade-linter"]
   pull_request:
-    branches: ["main"]
+    branches: ["main", "master"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: ["1.20", "1.23", "1.27"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v5
         with:
-          go-version: 1.19
+          go-version: ${{ matrix.go-version }}
+          cache: true
 
       - name: Linter
         run: make lint
