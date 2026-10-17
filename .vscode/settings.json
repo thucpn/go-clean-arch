@@ -1,7 +1,8 @@
 {
   "[go]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "golang.go"
+    "editor.defaultFormatter": "golang.go",
+    "editor.links": false
   },
   "files.associations": {
     "*.Makefile": "makefile",
