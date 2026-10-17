@@ -1,12 +1,16 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"log"
+	"net/http"
 	"net/url"
 	"os"
+	"os/signal"
 	"strconv"
+	"syscall"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -85,5 +89,26 @@ func main() {
 	if address == "" {
 		address = defaultAddress
 	}
-	log.Fatal(e.Start(address)) //nolint
+	serverErr := make(chan error, 1)
+	go func() {
+		if err := e.Start(address); err != nil && err != http.ErrServerClosed {
+			serverErr <- err
+		}
+	}()
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, os.Interrupt, syscall.SIGTERM)
+	select {
+	case err := <-serverErr:
+		log.Println("server failed", err)
+		return
+	case sig := <-quit:
+		log.Println("shutting down", sig.String())
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), timeoutContext)
+	defer cancel()
+	if err := e.Shutdown(ctx); err != nil {
+		log.Println("server shutdown failed", err)
+	}
 }
