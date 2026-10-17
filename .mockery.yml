@@ -10,6 +10,10 @@ packages:
     interfaces:
       ArticleRepository:
       AuthorRepository:
+      MathService:
+        config:
+          dir: internal/rest/mocks
+          pkgname: mocks
   github.com/bxcodec/go-clean-arch/internal/rest:
     interfaces:
       ArticleService:

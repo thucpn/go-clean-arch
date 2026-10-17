@@ -78,6 +78,7 @@ func main() {
 	// Build service Layer
 	svc := article.NewService(articleRepo, authorRepo)
 	rest.NewArticleHandler(e, svc)
+	rest.NewMathHandler(e, article.NewMathService())
 
 	// Start Server
 	address := os.Getenv("SERVER_ADDRESS")
